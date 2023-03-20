@@ -1,2 +1,14 @@
 # ivs-proj2
-Kalkulacka
+Skupinovy (druhy) projekt do predmetu IVS na skole VUT.
+
+Pred rozbehnutim projektu jako prvni nainstaluj python virtualni prostredi se vsemi zavislostmi pomoci bash skriptu 'setup.sh':
+
+```
+./setup.sh --create-env --install
+```
+
+Popripade pouzij tenhle kod, pro podrobnosti skriptu:
+
+```
+./setup.sh --help
+```
