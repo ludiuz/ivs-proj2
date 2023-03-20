@@ -12,3 +12,8 @@ Popripade pouzij tenhle kod, pro podrobnosti skriptu:
 ```
 ./setup.sh --help
 ```
+
+Po vytvoreni env uz staci pouze vzdy spustit samotny 'setup.sh' a automaticky to hodi uzivatele do virtualniho prostredi.
+```
+./setup.sh
+```
