@@ -1,19 +1,43 @@
 # ivs-proj2
-Skupinovy (druhy) projekt do predmetu IVS na skole VUT.
+## Project: Calculator
+This project is a calculator with a command-line interface and an optional graphical user interface (GUI). To run the calculator, you need to have the required dependencies installed and execute the src/main.py script.
 
-Pred rozbehnutim projektu jako prvni nainstaluj python virtualni prostredi se vsemi zavislostmi pomoci bash skriptu 'env.sh':
 
-```
-./env.sh --create-env --install
-```
+### Setting up a virtual environment
+To create a virtual environment using Python's built-in venv module, follow these steps:
 
-Popripade pouzij tenhle kod, pro podrobnosti skriptu:
+1. #### Open a terminal and navigate to the project directory.
+2. #### Run one of the following command to create a virtual environment named venv:
+	```python3 -m venv env```
+	
+4. #### Activate the virtual environment:
+	>For Linux or macOS:
 
-```
-./env.sh --help
-```
+	```source env/bin/activate```
+	>For Windows:
 
-Po vytvoreni env uz staci pouze vzdy spustit samotny 'env.sh' a automaticky to hodi uzivatele do virtualniho prostredi.
+	```.\env\Scripts\activate```
+
+
+###  Installing required libraries
+After activating the virtual environment, install the necessary libraries listed in the requirements.txt file by running the following command:
+
+```pip install -r requirements.txt```
+
+
+### Running main.py
+With the virtual environment activated and required libraries installed, you can now run src/main.py. To do this, execute the following command:
+
+```python src/main.py```
+
+By default, the calculator will run with a GUI. You can also run the calculator in command-line mode with various options:
 ```
-./env.sh
+--no-gui: Run the calculator without the GUI.
+--help or -h: Display help information.
+--compute <formula> or -c <formula>: Directly compute the result of the given formula.
 ```
+For example, to compute the result of "2 + 3" directly, use:
+
+```python src/main.py --compute "2 + 3"```
+
+To exit the command-line mode, type "q", "quit", or "exit".
