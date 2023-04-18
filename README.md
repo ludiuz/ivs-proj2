@@ -4,7 +4,7 @@ This project is a calculator with a command-line interface and an optional graph
 
 
 ### Setting up a virtual environment
-To create a virtual environment using Python's built-in venv module, follow these steps:
+To create a virtual environment using Python's built-in env module, follow these steps:
 
 1. #### Open a terminal and navigate to the project directory.
 2. #### Run one of the following command to create a virtual environment named venv:

@@ -1,8 +1,12 @@
+# libs
 import PySimpleGUI as sg
-from core import Engine
 
-class Calculator:
+# scripts
+import calculator as calc
+
+class App:
     def __init__(self):
+        self.calc = calc.Calculator()
         self.result = ''
         self.window = sg.Window('Calculator', self._create_layout())
 
@@ -18,7 +22,6 @@ class Calculator:
         ]
 
     def run(self):
-        engine = Engine()
         while True:
             event, values = self.window.read()
             if event in (sg.WIN_CLOSED, 'Quit'):
@@ -31,7 +34,7 @@ class Calculator:
                 self.result = '(' + self.result + ')**(1/2)'
                 self.window['input'].update(self.result)
             elif event == '=':
-                Answer = engine.validate(self.result)
+                Answer = self.calc(self.result)
                 Answer = str(round(float(Answer),3))
                 self.window['input'].Update(Answer)
                 self.result = Answer
@@ -48,5 +51,5 @@ class Calculator:
 
 
 if __name__ == '__main__':
-    calc = Calculator()
-    calc.run()
+    app = App()
+    app.run()

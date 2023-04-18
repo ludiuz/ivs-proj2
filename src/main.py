@@ -2,11 +2,11 @@
 import sys
 
 # scripts
-import core
+import calculator
 import gui
 
 def get_result(formula, engine):
-    result = engine.validate(formula)
+    result = engine(formula)
     if isinstance(result, float):
         print(result)
     elif isinstance(result, tuple):
@@ -21,7 +21,7 @@ def ask4input():
     return input("Input formula: ")
 
 if __name__ == "__main__":
-    engine = core.Engine()
+    engine = calculator.Calculator()
     if ("--help" or "-h") in sys.argv:
         print("You got this man")
     elif "--no-gui" in sys.argv:
@@ -34,5 +34,5 @@ if __name__ == "__main__":
         if len(sys.argv) != 1 + idx and sys.argv[idx + 1]:
             get_result(sys.argv[idx + 1], engine)
     else:
-        app = gui.CalculatorGUI(engine)
-        app.run_loop()
+        app = gui.App(engine)
+        app.run()
