@@ -11,8 +11,7 @@ class SyntaxFilter:
     special_n = [("pi", "P"), ("e", "E")]
         
     def __call__(self, s: str):
-        self._check_operations(s)
-        return self._rewrite_chars(s)
+        return self._check_operations(s)
 
     def _check_operations(self, s: str):
         # include all special characters assigned to special operations and special numbers
@@ -37,7 +36,3 @@ class SyntaxFilter:
         # check if only valid characters are in string
         if all(c in extended_valid_chars for c in s) != True:
             raise SyntaxError
-
-    def _rewrite_chars(self, s: str):
-        ret = s.replace('^', '**')
-        return ret
