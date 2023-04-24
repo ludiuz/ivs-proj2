@@ -143,7 +143,7 @@ class Engine:
         """
         left_param = [i for i, string in enumerate(ret) if "(" in string]
         right_param = [i for i, string in enumerate(ret) if ")" in string]
-        #assert len(left_param) == len(right_param)
+        # assert len(left_param) == len(right_param)
 
         if len(left_param) == 0:  # no parenthesis
             return self._calculate(ret)  # end of recursion
