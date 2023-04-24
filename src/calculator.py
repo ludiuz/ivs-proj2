@@ -28,6 +28,7 @@ class Calculator:
         Validate and compute the input string, then return the result.
         If an error occurs, return the error type and message.
         """
+        if s == "": return s # empty input
         try:
             # Apply filter to user input to validate its correctness
             self.f(s)
@@ -35,13 +36,13 @@ class Calculator:
             ret = self.c(str(s))
             self.history.append(ret)
             return ret
-        except SyntaxError as e:
+        except SyntaxError as e: # occur in SyntaxFilter
             return self._ret_error("SyntaxError", e)
-        except ZeroDivisionError as e:
+        except ZeroDivisionError as e: # occur in Engine
             return self._ret_error("ZeroDivisionError", e)
-        except ValueError as e:
+        except ValueError as e: # occur in Engine using factorial
             return self._ret_error("ValueError", e)
-        except OverflowError as e:
+        except OverflowError as e: # can occur anywhere (most probably in Engine)
             return self._ret_error("OverflowError", e)
 
     def _ret_error(self, error: str, error_msg: str):
@@ -49,3 +50,8 @@ class Calculator:
         Return a tuple containing the error type and message.
         """
         return (error, error_msg)
+
+#if __name__ == "__main__":
+#    c = Calculator()
+#    print(1, c("-1"))
+#    print(2, c("5/0"))
