@@ -81,7 +81,7 @@ class Engine:
             return ret  # single number -> final result
         for idx, i in enumerate(ret[1:]):
             if i == "!":
-                n = int(ret[idx])
+                n = int(float(ret[idx]))  # string -> float -> int
                 assert n > 0  # n should be always positive number
                 ret[idx : idx + 2] = [float(self.ops["!"](n))]
                 return self._compute_factorial(ret)
@@ -154,6 +154,6 @@ class Engine:
                 if i > j:
                     ret[j : i + 1] = self._calculate(ret[j : i + 1])
                     if len(ret) == 1:
-                        return float(ret)
+                        return ret
                     ret = self._check_func(ret)
                     return self._eval("".join(ret))
