@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.syntax_filter &mdash; IVS-PROJ2 Calculator 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            IVS-PROJ2 Calculator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">IVS-PROJ2 Calculator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">src.syntax_filter</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for src.syntax_filter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+
+<div class="viewcode-block" id="SyntaxFilter"><a class="viewcode-back" href="../../src.html#src.syntax_filter.SyntaxFilter">[docs]</a><span class="k">class</span> <span class="nc">SyntaxFilter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parses the input to ensure it resembles WolframAlpha-like syntax.</span>
+<span class="sd">    Designed to be used before the Engine() class.</span>
+<span class="sd">    The only external function that should be used is __call__.</span>
+<span class="sd">    The class doesn&#39;t return anything; it only raises SyntaxError if the input is invalid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">valid_chars</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s2">&quot;0123456789+-^*/().!%&quot;</span><span class="p">)</span>
+    <span class="n">special_op</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;sin&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;cos&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="s2">&quot;L&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;tan&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">)]</span>
+    <span class="n">special_n</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span> <span class="s2">&quot;P&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the input string has valid syntax and operations.</span>
+
+<span class="sd">        :param s: the input string</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :raises SyntaxError: if the input string has invalid syntax or operation combinations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_operations</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_operations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check for any invalid syntax or invalid operation combinations in the input string.</span>
+
+<span class="sd">        :param s: the input string</span>
+<span class="sd">        :type s: str</span>
+<span class="sd">        :raises SyntaxError: if the input string has invalid syntax or operation combinations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># string of operations</span>
+        <span class="n">_op</span> <span class="o">=</span> <span class="s2">&quot;^%*/+-&quot;</span>
+
+        <span class="c1"># check number of parenthesis and their order (get indexes)</span>
+        <span class="n">left_param</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">string</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;(&quot;</span> <span class="ow">in</span> <span class="n">string</span><span class="p">]</span>
+        <span class="n">right_param</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">string</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;)&quot;</span> <span class="ow">in</span> <span class="n">string</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">left_param</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">right_param</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span>
+        <span class="c1"># check correct order of parenthesis</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">left_param</span><span class="p">,</span> <span class="n">right_param</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span>
+
+        <span class="c1"># Replace special operations and special numbers with their corresponding characters</span>
+        <span class="k">for</span> <span class="n">str_</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_op</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_n</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">str_</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;(?&lt;![0-9A-Za-z])&quot;</span> <span class="o">+</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">str_</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;(?![0-9A-Za-z])&quot;</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">char</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+        <span class="c1"># pattern = r&quot;(\d+\.\d+|\d+|[()+\-*/!^]|P|E|S|C|L|T)&quot;</span>
+        <span class="c1"># ds = re.findall(pattern, s)</span>
+        <span class="c1"># print(ds)</span>
+
+        <span class="c1"># get rid of all &quot; &quot; in s</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if any special numbers + numbers are followed by an opening parenthesis</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_n</span> <span class="o">+</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]:</span>
+            <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">(&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span>
+            <span class="k">if</span> <span class="sa">f</span><span class="s2">&quot;)</span><span class="si">{</span><span class="n">char</span><span class="si">}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span>
+
+        <span class="c1"># Check if two parentheses are adjacent</span>
+        <span class="k">if</span> <span class="s2">&quot;)(&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span>
+
+        <span class="c1"># check if operations are next to each others + check if factorial is attached to operation</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])):</span>
+                <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_op</span> <span class="ow">and</span> <span class="n">s</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_op</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">SyntaxError</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_op</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;!&quot;</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">SyntaxError</span>
+
+        <span class="c1"># check edges</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_op</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="s2">&quot;!^%*/&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span>
+
+        <span class="c1"># include all special characters assigned to special operations and special numbers</span>
+        <span class="n">extended_valid_chars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_chars</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">char</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_op</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">special_n</span><span class="p">:</span>
+            <span class="n">extended_valid_chars</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+        <span class="c1"># Check if only valid characters are in the string</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">extended_valid_chars</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Tomas, Adam, Mario, Peto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
