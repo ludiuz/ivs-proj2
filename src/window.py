@@ -1,26 +1,27 @@
 from tkinter import *
 from calculator import Calculator
 import os
-class Formula():
+
+
+class Formula:
     def __init__(self):
         self._inp = StringVar()
         self._inp.set("")
-        self.res=StringVar()
+        self.res = StringVar()
         self.res.set("")
 
     def btn_clicked(self, input):
-        #print(input)
-        #self._inp.set(input)
-        #print(self._inp.get())
+        # print(input)
+        # self._inp.set(input)
+        # print(self._inp.get())
         if input == "del":
-            
             pom = self._inp.get()
             cursor_pos = entry1.index(INSERT)
             if cursor_pos == 0:
                 return
-            self._inp.set(pom[:cursor_pos-1]+pom[cursor_pos:])
-            entry1.icursor(cursor_pos-1)
-            if pom == "" :
+            self._inp.set(pom[: cursor_pos - 1] + pom[cursor_pos:])
+            entry1.icursor(cursor_pos - 1)
+            if pom == "":
                 self.res.set("")
                 return
             result = calc(self._inp.get())
@@ -32,418 +33,343 @@ class Formula():
             entry1.icursor(END)
         elif input == "odm":
             pom = self._inp.get()
-            pom = '(' + pom + ')^(1/)'
+            pom = "(" + pom + ")^(1/)"
             self._inp.set(pom)
-            #result = calc(self._inp.get())
-            #self.res.set(result)
+            result = calc(self._inp.get())
+            self.res.set(result)
 
-        else: 
+        else:
             cursor_pos = entry1.index(INSERT)
             pom = self._inp.get()
             self._inp.set(pom[:cursor_pos] + input + pom[cursor_pos:])
-            entry1.icursor(cursor_pos+1)
-            #print(self._inp.get())
+            entry1.icursor(cursor_pos + 1)
+            # print(self._inp.get())
             result = calc(self._inp.get())
             self.res.set(result)
-            #self.res = self.res.set(calc(str(self._inp.get())))
-            #print(res)
-        
+            # self.res = self.res.set(calc(str(self._inp.get())))
+            # print(res)
+
     def on_key_press(self, event):
         # treba nabidovat klavesniuc prva je pozadi ;ebo ked dame get() a potom set() tak inp je prazdne
-        #print(self._inp.get())
+        # print(self._inp.get())
         self._inp.set(self._inp.get())
-        result =  calc(self._inp.get())
+        result = calc(self._inp.get())
         self.res.set(result)
+
 
 window = Tk()
 form = Formula()
 calc = Calculator()
 res = calc("5+*-")
-#print(res)
+# print(res)
 window.geometry("360x800")
-window.configure(bg = "#fcfcfc")
-
+window.configure(bg="#fcfcfc")
 
 
 canvas = Canvas(
     window,
-    bg = "#fcfcfc",
-    height = 800,
-    width = 360,
-    bd = 0,
-    highlightthickness = 0,
-    relief = "ridge")
-canvas.place(x = 0, y = 0)
+    bg="#fcfcfc",
+    height=800,
+    width=360,
+    bd=0,
+    highlightthickness=0,
+    relief="ridge",
+)
+canvas.place(x=0, y=0)
 
 
 label_resoult = Label(
+    anchor="e",
     font=("Arial", 18),
-    bd = 0,
-    bg = "#fcfcfc",
+    bd=0,
+    bg="#fcfcfc",
     textvariable=form.res,
-    highlightthickness = 0
+    highlightthickness=0,
 )
-label_resoult.config(state='disabled')
-label_resoult.place(
-    x = 15, y = 190,
-    width = 330,
-    height = 55)
+label_resoult.config(state="disabled")
+label_resoult.place(x=15, y=190, width=330, height=55)
 
 
-entry1_img = PhotoImage(file = os.getcwd()+ "/icons/img_textBox1.png")
-entry1_bg = canvas.create_image(
-    180.0, 137.5,
-    image = entry1_img)
+entry1_img = PhotoImage(file=os.getcwd() + "\/cons/img_textBox1.png")
+entry1_bg = canvas.create_image(180.0, 137.5, image=entry1_img)
 
 entry1 = Entry(
     font=("Arial", 22),
-    justify='right',
-    bd = 0,
-    bg = "#fcfcfc",
+    justify="right",
+    bd=0,
+    bg="#fcfcfc",
     textvariable=form._inp,
-    highlightthickness = 0)
+    highlightthickness=0,
+)
 
-entry1.place(
-    x = 15, y = 85,
-    width = 330,
-    height = 103)
+entry1.place(x=15, y=85, width=330, height=103)
 
-entry1.bind('<Key>', lambda event: window.after(10, form.on_key_press, event))
-entry0_img = PhotoImage(file =  os.getcwd()+"/icons/img_textBox0.png")
-entry0_bg = canvas.create_image(
-    180.0, 218.5,
-    image = entry0_img)
+entry1.bind("<Key>", lambda event: window.after(10, form.on_key_press, event))
+entry0_img = PhotoImage(file=os.getcwd() + "\/cons/img_textBox0.png")
+entry0_bg = canvas.create_image(180.0, 218.5, image=entry0_img)
 
-
-
-
-
-
-
-
-
-img0 = PhotoImage(file =  os.getcwd()+"/icons/img0.png")
+img0 = PhotoImage(file=os.getcwd() + "\/cons/img0.png")
 b0 = Button(
-    image = img0,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('='),
-    relief = "flat")
+    image=img0,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("="),
+    relief="flat",
+)
 
-b0.place(
-    x = 270, y = 620,
-    width = 90,
-    height = 180)
+b0.place(x=270, y=620, width=90, height=180)
 
-img1 = PhotoImage(file =  os.getcwd()+"/icons/img1.png")
+img1 = PhotoImage(file=os.getcwd() + "\/cons/img1.png")
 b1 = Button(
-    image = img1,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command =  lambda: form.btn_clicked('%'),
-    relief = "flat")
+    image=img1,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("%"),
+    relief="flat",
+)
 
-b1.place(
-    x = 0, y = 710,
-    width = 90,
-    height = 90)
+b1.place(x=0, y=710, width=90, height=90)
 
-img2 = PhotoImage(file =  os.getcwd()+"/icons/img2.png")
+img2 = PhotoImage(file=os.getcwd() + "\/cons/img2.png")
 b2 = Button(
-    image = img2,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command =  lambda: form.btn_clicked('0'),
-    relief = "flat")
+    image=img2,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("0"),
+    relief="flat",
+)
 
-b2.place(
-    x = 90, y = 710,
-    width = 90,
-    height = 90)
+b2.place(x=90, y=710, width=90, height=90)
 
-img3 = PhotoImage(file =  os.getcwd()+"/icons/img3.png")
+img3 = PhotoImage(file=os.getcwd() + "\/cons/img3.png")
 b3 = Button(
-    image = img3,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('.'),
-    relief = "flat")
+    image=img3,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("."),
+    relief="flat",
+)
 
-b3.place(
-    x = 180, y = 710,
-    width = 90,
-    height = 90)
+b3.place(x=180, y=710, width=90, height=90)
 
-img4 = PhotoImage(file =  os.getcwd()+"/icons/img4.png")
+img4 = PhotoImage(file=os.getcwd() + "\/cons/img4.png")
 b4 = Button(
-    image = img4,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('1'),
-    relief = "flat")
+    image=img4,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("1"),
+    relief="flat",
+)
 
-b4.place(
-    x = 0, y = 620,
-    width = 90,
-    height = 90)
+b4.place(x=0, y=620, width=90, height=90)
 
-img5 = PhotoImage(file =  os.getcwd()+"/icons/img5.png")
+img5 = PhotoImage(file=os.getcwd() + "\/cons/img5.png")
 b5 = Button(
-    image = img5,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('2'),
-    relief = "flat")
+    image=img5,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("2"),
+    relief="flat",
+)
 
-b5.place(
-    x = 90, y = 620,
-    width = 90,
-    height = 90)
+b5.place(x=90, y=620, width=90, height=90)
 
-img6 = PhotoImage(file =  os.getcwd()+"/icons/img6.png")
+img6 = PhotoImage(file=os.getcwd() + "\/cons/img6.png")
 b6 = Button(
-    image = img6,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('3'),
-    relief = "flat")
+    image=img6,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("3"),
+    relief="flat",
+)
 
-b6.place(
-    x = 180, y = 620,
-    width = 90,
-    height = 90)
+b6.place(x=180, y=620, width=90, height=90)
 
-img7 = PhotoImage(file =  os.getcwd()+"/icons/img7.png")
+img7 = PhotoImage(file=os.getcwd() + "\/cons/img7.png")
 b7 = Button(
-    image = img7,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('4'),
-    relief = "flat")
+    image=img7,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("4"),
+    relief="flat",
+)
 
-b7.place(
-    x = 0, y = 530,
-    width = 90,
-    height = 90)
+b7.place(x=0, y=530, width=90, height=90)
 
-img8 = PhotoImage(file =  os.getcwd()+"/icons/img8.png")
+img8 = PhotoImage(file=os.getcwd() + "\/cons/img8.png")
 b8 = Button(
-    image = img8,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('5'),
-    relief = "flat")
+    image=img8,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("5"),
+    relief="flat",
+)
 
-b8.place(
-    x = 90, y = 530,
-    width = 90,
-    height = 90)
+b8.place(x=90, y=530, width=90, height=90)
 
-img9 = PhotoImage(file =  os.getcwd()+"/icons/img9.png")
+img9 = PhotoImage(file=os.getcwd() + "\/cons/img9.png")
 b9 = Button(
-    image = img9,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('6'),
-    relief = "flat")
+    image=img9,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("6"),
+    relief="flat",
+)
 
-b9.place(
-    x = 180, y = 530,
-    width = 90,
-    height = 90)
+b9.place(x=180, y=530, width=90, height=90)
 
-img10 = PhotoImage(file =  os.getcwd()+"/icons/img10.png")
+img10 = PhotoImage(file=os.getcwd() + "\/cons/img10.png")
 b10 = Button(
-    image = img10,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('7'),
-    relief = "flat")
+    image=img10,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("7"),
+    relief="flat",
+)
 
-b10.place(
-    x = 0, y = 440,
-    width = 90,
-    height = 90)
+b10.place(x=0, y=440, width=90, height=90)
 
-img11 = PhotoImage(file =  os.getcwd()+"/icons/img11.png")
+img11 = PhotoImage(file=os.getcwd() + "\/cons/img11.png")
 b11 = Button(
-    image = img11,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('8'),
-    relief = "flat")
+    image=img11,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("8"),
+    relief="flat",
+)
 
-b11.place(
-    x = 90, y = 440,
-    width = 90,
-    height = 90)
+b11.place(x=90, y=440, width=90, height=90)
 
-img12 = PhotoImage(file =  os.getcwd()+"/icons/img12.png")
+img12 = PhotoImage(file=os.getcwd() + "\/cons/img12.png")
 b12 = Button(
-    image = img12,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('9'),
-    relief = "flat")
+    image=img12,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("9"),
+    relief="flat",
+)
 
-b12.place(
-    x = 180, y = 440,
-    width = 90,
-    height = 90)
+b12.place(x=180, y=440, width=90, height=90)
 
-img13 = PhotoImage(file =  os.getcwd()+"/icons/img13.png")
+img13 = PhotoImage(file=os.getcwd() + "\/cons/img13.png")
 b13 = Button(
-    image = img13,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('('),
-    relief = "flat")
+    image=img13,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("("),
+    relief="flat",
+)
 
-b13.place(
-    x = 0, y = 350,
-    width = 90,
-    height = 90)
+b13.place(x=0, y=350, width=90, height=90)
 
-img14 = PhotoImage(file =  os.getcwd()+"/icons/img14.png")
+img14 = PhotoImage(file=os.getcwd() + "\/cons/img14.png")
 b14 = Button(
-    image = img14,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked(')'),
-    relief = "flat")
+    image=img14,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked(")"),
+    relief="flat",
+)
 
-b14.place(
-    x = 90, y = 350,
-    width = 90,
-    height = 90)
+b14.place(x=90, y=350, width=90, height=90)
 
-img15 = PhotoImage(file =  os.getcwd()+"/icons/img15.png")
+img15 = PhotoImage(file=os.getcwd() + "\/cons/img15.png")
 b15 = Button(
-    image = img15,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('/'),
-    relief = "flat")
+    image=img15,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("/"),
+    relief="flat",
+)
 
-b15.place(
-    x = 180, y = 350,
-    width = 90,
-    height = 90)
+b15.place(x=180, y=350, width=90, height=90)
 
-img16 = PhotoImage(file =  os.getcwd()+"/icons/img16.png")
+img16 = PhotoImage(file=os.getcwd() + "\/cons/img16.png")
 b16 = Button(
-    image = img16,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('^'),
-    relief = "flat")
+    image=img16,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("^"),
+    relief="flat",
+)
 
-b16.place(
-    x = 0, y = 260,
-    width = 90,
-    height = 90)
+b16.place(x=0, y=260, width=90, height=90)
 
-img17 = PhotoImage(file =  os.getcwd()+"/icons/img17.png")
+img17 = PhotoImage(file=os.getcwd() + "\/cons/img17.png")
 b17 = Button(
-    image = img17,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('odm'),
-    relief = "flat")
+    image=img17,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("odm"),
+    relief="flat",
+)
 
-b17.place(
-    x = 90, y = 260,
-    width = 90,
-    height = 90)
+b17.place(x=90, y=260, width=90, height=90)
 
-img18 = PhotoImage(file =  os.getcwd()+"/icons/img18.png")
+img18 = PhotoImage(file=os.getcwd() + "\/cons/img18.png")
 b18 = Button(
-    image = img18,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('!'),
-    relief = "flat")
+    image=img18,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("!"),
+    relief="flat",
+)
 
-b18.place(
-    x = 180, y = 260,
-    width = 90,
-    height = 90)
+b18.place(x=180, y=260, width=90, height=90)
 
-img19 = PhotoImage(file =  os.getcwd()+"/icons/img19.png")
+img19 = PhotoImage(file=os.getcwd() + "\/cons/img19.png")
 b19 = Button(
-    image = img19,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('+'),
-    relief = "flat")
+    image=img19,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("+"),
+    relief="flat",
+)
 
-b19.place(
-    x = 270, y = 530,
-    width = 90,
-    height = 90)
+b19.place(x=270, y=530, width=90, height=90)
 
-img20 = PhotoImage(file =  os.getcwd()+"/icons/img20.png")
+img20 = PhotoImage(file=os.getcwd() + "\/cons/img20.png")
 b20 = Button(
-    image = img20,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('-'),
-    relief = "flat")
+    image=img20,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("-"),
+    relief="flat",
+)
 
-b20.place(
-    x = 270, y = 440,
-    width = 90,
-    height = 90)
+b20.place(x=270, y=440, width=90, height=90)
 
-img21 = PhotoImage(file =  os.getcwd()+"/icons/img21.png")
+img21 = PhotoImage(file=os.getcwd() + "\/cons/img21.png")
 b21 = Button(
-    image = img21,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('*'),
-    relief = "flat")
+    image=img21,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("*"),
+    relief="flat",
+)
 
-b21.place(
-    x = 270, y = 350,
-    width = 90,
-    height = 90)
+b21.place(x=270, y=350, width=90, height=90)
 
-img22 = PhotoImage(file =  os.getcwd()+"/icons/img22.png")
+img22 = PhotoImage(file=os.getcwd() + "\/cons/img22.png")
 b22 = Button(
-    image = img22,
-    borderwidth = 0,
-    highlightthickness = 0,
-    command = lambda: form.btn_clicked('del'),
-    relief = "flat")
+    image=img22,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: form.btn_clicked("del"),
+    relief="flat",
+)
 
-b22.place(
-    x = 270, y = 260,
-    width = 90,
-    height = 90)
+b22.place(x=270, y=260, width=90, height=90)
 
-img23 = PhotoImage(file =  os.getcwd()+"/icons/img23.png")
-b23 = Button(
-    image = img23,
-    borderwidth = 0,
-    highlightthickness = 0,
-    relief = "flat")
+img23 = PhotoImage(file=os.getcwd() + "\/cons/img23.png")
+b23 = Button(image=img23, borderwidth=0, highlightthickness=0, relief="flat")
 
-b23.place(
-    x = 0, y = 46,
-    width = 181,
-    height = 41)
+b23.place(x=0, y=46, width=181, height=41)
 
-img24 = PhotoImage(file =  os.getcwd()+"/icons/img24.png")
-b24 = Button(
-    image = img24,
-    borderwidth = 0,
-    highlightthickness = 0,
-    relief = "flat")
+img24 = PhotoImage(file=os.getcwd() + "\/cons/img24.png")
+b24 = Button(image=img24, borderwidth=0, highlightthickness=0, relief="flat")
 
-b24.place(
-    x = 179, y = 46,
-    width = 181,
-    height = 41)
+b24.place(x=179, y=46, width=181, height=41)
 
 window.resizable(False, False)
 window.mainloop()
