@@ -67,7 +67,7 @@ class SyntaxFilter:
         # check if operations are next to each others + check if factorial is attached to operation
         if len(s) > 1:
             for idx in range(len(s[:-1])):
-                if s[idx] in _op and s[idx + 1] in _op:
+                if s[idx] in _op and s[idx + 1] in _op + ")":
                     raise SyntaxError
                 if (s[idx] in _op + "(") and (s[idx + 1] == "!"):
                     raise SyntaxError
