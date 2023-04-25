@@ -82,7 +82,7 @@ class Engine:
         for idx, i in enumerate(ret[1:]):
             if i == "!":
                 n = int(float(ret[idx]))  # string -> float -> int
-                assert n > 0  # n should be always positive number
+                assert n >= 0  # n should be always positive number
                 ret[idx : idx + 2] = [float(self.ops["!"](n))]
                 return self._compute_factorial(ret)
         return ret
