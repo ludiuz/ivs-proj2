@@ -8,7 +8,7 @@ To create a virtual environment using Python's built-in env module, follow these
 
 1. #### Open a terminal and navigate to the project directory.
 2. #### Run one of the following command to create a virtual environment named venv:
-	```python3 -m venv env```
+	```python3.10 -m venv env```
 	
 4. #### Activate the virtual environment:
 	>For Linux or macOS:

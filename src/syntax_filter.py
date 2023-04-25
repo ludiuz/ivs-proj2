@@ -10,7 +10,7 @@ class SyntaxFilter:
     The class doesn't return anything; it only raises SyntaxError if the input is invalid.
     """
 
-    valid_chars = set("0123456789+-^*/().!")
+    valid_chars = set("0123456789+-^*/().!%")
     special_op = [("sin", "S"), ("log", "L"), ("tan", "T")]
     special_n = [("pi", "P"), ("e", "E")]
 
@@ -26,7 +26,7 @@ class SyntaxFilter:
         """
 
         # string of operations
-        _op = "^*/+-"
+        _op = "^%*/+-"
 
         # check number of parenthesis and their order (get indexes)
         left_param = [i for i, string in enumerate(s) if "(" in string]
@@ -75,7 +75,7 @@ class SyntaxFilter:
         # check edges
         if s[-1] in _op + "(":
             raise SyntaxError
-        if s[0] in "!^*/":
+        if s[0] in "!^%*/":
             raise SyntaxError
 
         # include all special characters assigned to special operations and special numbers

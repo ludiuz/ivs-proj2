@@ -20,6 +20,7 @@ class Engine:
         "/": operator.truediv,
         "^": operator.pow,
         "!": math.factorial,
+        "%": math.modf,
     }
 
     const = {"pi": math.pi, "e": math.e}
@@ -65,7 +66,7 @@ class Engine:
         for idx, i in enumerate(ret[:-1]):
             if i == "-" and self.isnumber(ret[idx + 1]):
                 ret[idx + 1] = float(ret[idx + 1]) * -1
-                if idx != 0 and str(ret[idx - 1]) in "^*/+-":
+                if idx != 0 and str(ret[idx - 1]) in "^%*/+-":
                     ret.pop(idx)
                 else:
                     ret[idx] = "+"
@@ -110,7 +111,7 @@ class Engine:
         ret = self._handle_const(ret)
         ret = self._check_neg(ret)
         ret = self._compute_factorial(ret)
-        for op in "^*/+":
+        for op in "^%*/+":
             ret = self._compute(op, ret)
         if len(ret) == 3 and ret[0] == "(" and ret[2] == ")":
             return [str(ret[1])]
@@ -133,7 +134,7 @@ class Engine:
         """
         Evaluate the given string using the regex pattern and return the result.
         """
-        pattern = r"(\d+\.\d+|\d+|[()+\-*/!^]|pi|e|sin|cos|log)"
+        pattern = r"(\d+\.\d+|\d+|[()+\-*/!%^]|pi|e|sin|cos|log)"
         ret = re.findall(pattern, s)
         return self._dive(ret)
 
