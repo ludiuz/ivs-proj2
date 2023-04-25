@@ -17,12 +17,20 @@ class SyntaxFilter:
     def __call__(self, s: str):
         """
         Check if the input string has valid syntax and operations.
+
+        :param s: the input string
+        :type s: str
+        :raises SyntaxError: if the input string has invalid syntax or operation combinations
         """
         return self._check_operations(s)
 
     def _check_operations(self, s: str):
         """
         Check for any invalid syntax or invalid operation combinations in the input string.
+
+        :param s: the input string
+        :type s: str
+        :raises SyntaxError: if the input string has invalid syntax or operation combinations
         """
 
         # string of operations
@@ -88,8 +96,3 @@ class SyntaxFilter:
         # Check if only valid characters are in the string
         if all(c in extended_valid_chars for c in s) != True:
             raise SyntaxError
-
-
-# if __name__ == "__main__":
-#    sf = SyntaxFilter()
-#    sf("3%2")
