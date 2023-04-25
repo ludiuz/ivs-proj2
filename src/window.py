@@ -90,7 +90,7 @@ label_resoult.place(
     height = 55)
 
 
-entry1_img = PhotoImage(file = os.getcwd()+ "\icons\img_textBox1.png")
+entry1_img = PhotoImage(file = os.getcwd()+ "/icons/img_textBox1.png")
 entry1_bg = canvas.create_image(
     180.0, 137.5,
     image = entry1_img)
@@ -109,7 +109,7 @@ entry1.place(
     height = 103)
 
 entry1.bind('<Key>', lambda event: window.after(10, form.on_key_press, event))
-entry0_img = PhotoImage(file =  os.getcwd()+"\icons\img_textBox0.png")
+entry0_img = PhotoImage(file =  os.getcwd()+"/icons/img_textBox0.png")
 entry0_bg = canvas.create_image(
     180.0, 218.5,
     image = entry0_img)
@@ -122,7 +122,7 @@ entry0_bg = canvas.create_image(
 
 
 
-img0 = PhotoImage(file =  os.getcwd()+"\icons\img0.png")
+img0 = PhotoImage(file =  os.getcwd()+"/icons/img0.png")
 b0 = Button(
     image = img0,
     borderwidth = 0,
@@ -135,7 +135,7 @@ b0.place(
     width = 90,
     height = 180)
 
-img1 = PhotoImage(file =  os.getcwd()+"\icons\img1.png")
+img1 = PhotoImage(file =  os.getcwd()+"/icons/img1.png")
 b1 = Button(
     image = img1,
     borderwidth = 0,
@@ -148,7 +148,7 @@ b1.place(
     width = 90,
     height = 90)
 
-img2 = PhotoImage(file =  os.getcwd()+"\icons\img2.png")
+img2 = PhotoImage(file =  os.getcwd()+"/icons/img2.png")
 b2 = Button(
     image = img2,
     borderwidth = 0,
@@ -161,7 +161,7 @@ b2.place(
     width = 90,
     height = 90)
 
-img3 = PhotoImage(file =  os.getcwd()+"\icons\img3.png")
+img3 = PhotoImage(file =  os.getcwd()+"/icons/img3.png")
 b3 = Button(
     image = img3,
     borderwidth = 0,
@@ -174,7 +174,7 @@ b3.place(
     width = 90,
     height = 90)
 
-img4 = PhotoImage(file =  os.getcwd()+"\icons\img4.png")
+img4 = PhotoImage(file =  os.getcwd()+"/icons/img4.png")
 b4 = Button(
     image = img4,
     borderwidth = 0,
@@ -187,7 +187,7 @@ b4.place(
     width = 90,
     height = 90)
 
-img5 = PhotoImage(file =  os.getcwd()+"\icons\img5.png")
+img5 = PhotoImage(file =  os.getcwd()+"/icons/img5.png")
 b5 = Button(
     image = img5,
     borderwidth = 0,
@@ -200,7 +200,7 @@ b5.place(
     width = 90,
     height = 90)
 
-img6 = PhotoImage(file =  os.getcwd()+"\icons\img6.png")
+img6 = PhotoImage(file =  os.getcwd()+"/icons/img6.png")
 b6 = Button(
     image = img6,
     borderwidth = 0,
@@ -213,7 +213,7 @@ b6.place(
     width = 90,
     height = 90)
 
-img7 = PhotoImage(file =  os.getcwd()+"\icons\img7.png")
+img7 = PhotoImage(file =  os.getcwd()+"/icons/img7.png")
 b7 = Button(
     image = img7,
     borderwidth = 0,
@@ -226,7 +226,7 @@ b7.place(
     width = 90,
     height = 90)
 
-img8 = PhotoImage(file =  os.getcwd()+"\icons\img8.png")
+img8 = PhotoImage(file =  os.getcwd()+"/icons/img8.png")
 b8 = Button(
     image = img8,
     borderwidth = 0,
@@ -239,7 +239,7 @@ b8.place(
     width = 90,
     height = 90)
 
-img9 = PhotoImage(file =  os.getcwd()+"\icons\img9.png")
+img9 = PhotoImage(file =  os.getcwd()+"/icons/img9.png")
 b9 = Button(
     image = img9,
     borderwidth = 0,
@@ -252,7 +252,7 @@ b9.place(
     width = 90,
     height = 90)
 
-img10 = PhotoImage(file =  os.getcwd()+"\icons\img10.png")
+img10 = PhotoImage(file =  os.getcwd()+"/icons/img10.png")
 b10 = Button(
     image = img10,
     borderwidth = 0,
@@ -265,7 +265,7 @@ b10.place(
     width = 90,
     height = 90)
 
-img11 = PhotoImage(file =  os.getcwd()+"\icons\img11.png")
+img11 = PhotoImage(file =  os.getcwd()+"/icons/img11.png")
 b11 = Button(
     image = img11,
     borderwidth = 0,
@@ -278,7 +278,7 @@ b11.place(
     width = 90,
     height = 90)
 
-img12 = PhotoImage(file =  os.getcwd()+"\icons\img12.png")
+img12 = PhotoImage(file =  os.getcwd()+"/icons/img12.png")
 b12 = Button(
     image = img12,
     borderwidth = 0,
@@ -291,7 +291,7 @@ b12.place(
     width = 90,
     height = 90)
 
-img13 = PhotoImage(file =  os.getcwd()+"\icons\img13.png")
+img13 = PhotoImage(file =  os.getcwd()+"/icons/img13.png")
 b13 = Button(
     image = img13,
     borderwidth = 0,
@@ -304,7 +304,7 @@ b13.place(
     width = 90,
     height = 90)
 
-img14 = PhotoImage(file =  os.getcwd()+"\icons\img14.png")
+img14 = PhotoImage(file =  os.getcwd()+"/icons/img14.png")
 b14 = Button(
     image = img14,
     borderwidth = 0,
@@ -317,7 +317,7 @@ b14.place(
     width = 90,
     height = 90)
 
-img15 = PhotoImage(file =  os.getcwd()+"\icons\img15.png")
+img15 = PhotoImage(file =  os.getcwd()+"/icons/img15.png")
 b15 = Button(
     image = img15,
     borderwidth = 0,
@@ -330,7 +330,7 @@ b15.place(
     width = 90,
     height = 90)
 
-img16 = PhotoImage(file =  os.getcwd()+"\icons\img16.png")
+img16 = PhotoImage(file =  os.getcwd()+"/icons/img16.png")
 b16 = Button(
     image = img16,
     borderwidth = 0,
@@ -343,7 +343,7 @@ b16.place(
     width = 90,
     height = 90)
 
-img17 = PhotoImage(file =  os.getcwd()+"\icons\img17.png")
+img17 = PhotoImage(file =  os.getcwd()+"/icons/img17.png")
 b17 = Button(
     image = img17,
     borderwidth = 0,
@@ -356,7 +356,7 @@ b17.place(
     width = 90,
     height = 90)
 
-img18 = PhotoImage(file =  os.getcwd()+"\icons\img18.png")
+img18 = PhotoImage(file =  os.getcwd()+"/icons/img18.png")
 b18 = Button(
     image = img18,
     borderwidth = 0,
@@ -369,7 +369,7 @@ b18.place(
     width = 90,
     height = 90)
 
-img19 = PhotoImage(file =  os.getcwd()+"\icons\img19.png")
+img19 = PhotoImage(file =  os.getcwd()+"/icons/img19.png")
 b19 = Button(
     image = img19,
     borderwidth = 0,
@@ -382,7 +382,7 @@ b19.place(
     width = 90,
     height = 90)
 
-img20 = PhotoImage(file =  os.getcwd()+"\icons\img20.png")
+img20 = PhotoImage(file =  os.getcwd()+"/icons/img20.png")
 b20 = Button(
     image = img20,
     borderwidth = 0,
@@ -395,7 +395,7 @@ b20.place(
     width = 90,
     height = 90)
 
-img21 = PhotoImage(file =  os.getcwd()+"\icons\img21.png")
+img21 = PhotoImage(file =  os.getcwd()+"/icons/img21.png")
 b21 = Button(
     image = img21,
     borderwidth = 0,
@@ -408,7 +408,7 @@ b21.place(
     width = 90,
     height = 90)
 
-img22 = PhotoImage(file =  os.getcwd()+"\icons\img22.png")
+img22 = PhotoImage(file =  os.getcwd()+"/icons/img22.png")
 b22 = Button(
     image = img22,
     borderwidth = 0,
@@ -421,7 +421,7 @@ b22.place(
     width = 90,
     height = 90)
 
-img23 = PhotoImage(file =  os.getcwd()+"\icons\img23.png")
+img23 = PhotoImage(file =  os.getcwd()+"/icons/img23.png")
 b23 = Button(
     image = img23,
     borderwidth = 0,
@@ -433,7 +433,7 @@ b23.place(
     width = 181,
     height = 41)
 
-img24 = PhotoImage(file =  os.getcwd()+"\icons\img24.png")
+img24 = PhotoImage(file =  os.getcwd()+"/icons/img24.png")
 b24 = Button(
     image = img24,
     borderwidth = 0,
