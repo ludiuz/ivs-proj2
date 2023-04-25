@@ -2,3 +2,4 @@ PySimpleGUI==4.60.4
 # dev packages
 pytest==7.3.1
 black==23.3.0
+sphinx==6.2.1

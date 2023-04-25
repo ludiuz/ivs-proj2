@@ -27,6 +27,11 @@ class Calculator:
         """
         Validate and compute the input string, then return the result.
         If an error occurs, return the error type and message.
+
+        :param s: the input string
+        :type s: str
+        :return: the result of the computation or an error message
+        :rtype: str or tuple
         """
         if s == "":
             return s  # empty input
@@ -49,6 +54,13 @@ class Calculator:
     def _ret_error(self, error: str, error_msg: str):
         """
         Return a tuple containing the error type and message.
+
+        :param error: the type of error
+        :type error: str
+        :param error_msg: the error message
+        :type error_msg: str
+        :return: the error type and message
+        :rtype: tuple
         """
         return (error, error_msg)
 

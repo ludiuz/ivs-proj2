@@ -53,6 +53,8 @@ def test_engine():
         core.Engine()("2^(-4)") == "0.0625"
     ), "Expected output '0.0625' for input '2^(-4)'"
 
+    assert core.Engine()("3 % 2") == "1.0", "Expected output '1.0' for input '3 % 2'"
+
     # test math functions
 
     assert (

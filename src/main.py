@@ -31,7 +31,9 @@ def get_result(calc, s: str):
     the full error message will be printed.
 
     :param calc: An instance of the calculator.
+    :type calc: Calculator
     :param s: The input string representing the formula.
+    :type s: str
     """
     result = calc(s)
     if isinstance(result, tuple):  # error output
@@ -51,6 +53,7 @@ def compute(string_input: str):
     of the given input formula without launching the GUI.
 
     :param string_input: The input string representing the formula.
+    :type string_input: str
     """
     c = calculator.Calculator()
     get_result(c, string_input)
