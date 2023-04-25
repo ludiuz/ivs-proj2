@@ -11,7 +11,7 @@ class SyntaxFilter:
     """
 
     valid_chars = set("0123456789+-^*/().!%")
-    special_op = [("sin", "S"), ("log", "L"), ("tan", "T")]
+    special_op = [("sin", "S"), ("cos", "C"), ("log", "L"), ("tan", "T")]
     special_n = [("pi", "P"), ("e", "E")]
 
     def __call__(self, s: str):
@@ -53,6 +53,9 @@ class SyntaxFilter:
         # ds = re.findall(pattern, s)
         # print(ds)
 
+        # get rid of all " " in s
+        s = s.replace(" ", "")
+
         # Check if any special numbers + numbers are followed by an opening parenthesis
         for _, char in self.special_n + [(None, str(i)) for i in range(0, 10)]:
             if f"{char}(" in s:
@@ -89,4 +92,4 @@ class SyntaxFilter:
 
 # if __name__ == "__main__":
 #    sf = SyntaxFilter()
-#    sf("*3+2*")
+#    sf("3%2")

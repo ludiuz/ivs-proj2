@@ -2,8 +2,9 @@ import argparse
 import sys
 
 import calculator
-import gui
-import window
+
+# import gui
+# import window
 
 
 def print_help():
