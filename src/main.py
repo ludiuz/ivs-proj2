@@ -3,6 +3,7 @@ import sys
 
 import calculator
 import gui
+import window
 
 
 def print_help():
@@ -73,7 +74,7 @@ def run_app():
     This function launches the calculator application with a graphical
     user interface by creating an instance of the App class.
     """
-    app = gui.App(calculator.Calculator())
+    app = window.formula()
     app.run()
 
 
