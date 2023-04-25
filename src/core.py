@@ -20,7 +20,7 @@ class Engine:
         "/": operator.truediv,
         "^": operator.pow,
         "!": math.factorial,
-        "%": math.modf,
+        "%": math.fmod,
     }
 
     const = {"pi": math.pi, "e": math.e}
@@ -28,6 +28,7 @@ class Engine:
     func = {
         "sin": math.sin,
         "cos": math.cos,
+        "tan": math.tan,
         "log": math.log,
     }
 
@@ -157,3 +158,8 @@ class Engine:
                         return ret
                     ret = self._check_func(ret)
                     return self._eval("".join(ret))
+
+
+# if __name__ == "__main__":
+#    e = Engine()
+#    print(e("3%2"))
