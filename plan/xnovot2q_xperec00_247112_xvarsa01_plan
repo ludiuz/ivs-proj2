@@ -1,0 +1,65 @@
+------------------------------------------------------------------------------------------------------
+terminy:
+
+18.03 17:00	dohodnutie komunikacnaych kanalov
+		prvotny meeting
+		tvorba repozitara
+		zvolenie jazyka
+		
+		
+
+20.03		crashcourse Python
+		navrh UI
+		vyber vhodnych kniznic
+
+
+27.03
+		implementacia
+		
+03.04		
+		BETA verzia
+		mockup
+10.04
+		tvorba testov		
+		graficke rozhranie
+17.04		
+		kompletne otestovanie funkcnosti
+		tvorba Doxygenu
+		napoveda	
+24.04		
+		intalator
+		casova rezerva
+
+26. 4. 7:00	ODOVZDAVANNIE
+
+------------------------------------------------------------------------------------------------------
+komunikacne kanale:
+		Pinpongaren / studovna Listovy koleje 4. poschodie
+		Dicord stretnutia
+		Alterna Listovy koleje
+
+		preferujeme face2face komunikaciu
+
+------------------------------------------------------------------------------------------------------
+pridelenie uloh:
+
+Tomas - implementacia
+Mario - tvorba matematickej knihovny, makefile
+Peter - testovanie
+Adam  - GUI, dokumentacia
+
+-----------------------------------------------------------------------------------------------------
+do nasho repozitara na githube mozno nahliadnut pomocout linku: 
+https://github.com/redpandastic/ivs-proj2
+
+nezabudnut:
+
+TODO?????? :
+Doxyfile
+mockupu 
+uživatelskou příručku v PDF,
+napoveda
+namapovanie kazdeho tlacitka na klavesnicu
+
+
+
