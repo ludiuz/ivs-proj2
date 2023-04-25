@@ -11,7 +11,8 @@ class Formula:
         self.res.set("")
 
     def btn_clear(self):
-        print("delet TODO")
+        self.res.set("")
+        self._inp.set("")
 
     def btn_clicked(self, input):
         # print(input)
@@ -66,6 +67,7 @@ calc = Calculator()
 res = calc("5+*-")
 # print(res)
 window.geometry("360x800")
+window.title("Calculator")
 window.configure(bg="#fcfcfc")
 
 
