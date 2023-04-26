@@ -1,13 +1,11 @@
 import cProfile
-import re
+import sys
 import calculator as c
 
 zoz = []
 calc = c.Calculator()
-
-# Open file and read data into list
-with open("data.txt", "r") as f:
-    zoz = zoz + f.read().split()
+# Read data from stdin into list
+zoz = sys.stdin.read().strip().split()
 
 def calculate():
     """
@@ -34,6 +32,6 @@ def calculate():
     res = calc("(" + str(res_2) + ")^(1/2)" , True)
     return res
 
-print(calculate())
+#print(calculate())
 # Run the calculate function using cProfile
-#cProfile.run("calculate()")
+cProfile.run("calculate()")
