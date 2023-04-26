@@ -20,6 +20,14 @@ $(VENV_DIR):
 install: $(VENV_DIR) $(VENV_ACTIVATE)
 	. $(VENV_ACTIVATE); sudo pip install -r ../requirements.txt
 
+ZIP_INSTALLED := $(shell command -v zip 2> /dev/null)
+# Install zip if not installed
+.PHONY: install-zip
+install-zip:
+ifndef ZIP_INSTALLED
+	sudo apt-get install zip
+endif
+
 # Run tests
 .PHONY: test
 test: $(VENV_DIR) $(VENV_ACTIVATE)
