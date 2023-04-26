@@ -20,25 +20,20 @@ def calculate():
     sum = ""
     res_i = ""
     for i in range(len(zoz)):
-        if i == 100000:
-            print("ano")
-        if i == 200000:
-            print("ano")
-        if i == 500000:
-            print("ano")
-        sum = calc(sum + "+" + zoz[i])
-        res_i = calc(res_i + "+" + zoz[i] + "^2")
+        sum = calc(sum + "+" + zoz[i], True)
+        res_i = calc(res_i + "+" + zoz[i] + "^2", True)
 
     # Calculate the average
-    avg = calc(sum + "/" + str(len(zoz)))
+    avg = calc(sum + "/" + str(len(zoz)), True)
 
     # Calculate the variance
-    first = calc((str(res_i) + "-" + str(len(zoz)) + "*(" + avg + ")^2"))
-    res_2 = calc("(1/(" + str(len(zoz)) + "-1))*" + first)
+    first = calc((str(res_i) + "-" + str(len(zoz)) + "*(" + avg + ")^2"), True)
+    res_2 = calc("(1/(" + str(len(zoz)) + "-1))*" + first, True)
 
     # Calculate the standard deviation
-    res = calc("(" + str(res_2) + ")^(1/2)")
+    res = calc("(" + str(res_2) + ")^(1/2)" , True)
     return res
 
+print(calculate())
 # Run the calculate function using cProfile
-cProfile.run("calculate()")
+#cProfile.run("calculate()")
