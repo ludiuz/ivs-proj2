@@ -1,0 +1,5 @@
+xnotov2q 130(struktura kalkulacky, pokrocile matematicke operacie,vytvorenie logiky za enginom kalkulacky, vytvorenie predlohy pre testy, vytvorenie predlohy a spravenie vacsiny dokumentacie, pomahanie pri commitoch ked nam nefungovali)
+xvarsa01 90(makefile, vytvaranie grafickych prvkov a navrh GUI, tvorba sablony pre gui)
+xperec00 90(makefile, tvorenie testov, manualne testovanie gui, dokoncenie dokumentacie)
+247112   90(tvorba a implementacia gui, profiling, tvorenie testov)
+
