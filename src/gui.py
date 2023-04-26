@@ -448,17 +448,77 @@ def run_gui():
 
     b22.place(x=270, y=260, width=90, height=90)
 
-    # Create a background image for 'history'
     img23 = PhotoImage(file="./src/icons/img23.png")
-    b23 = Button(image=img23, borderwidth=0, highlightthickness=0, relief="flat")
+    b23 = Button(
+        image = img23,
+        borderwidth = 0,
+        highlightthickness = 0,
+        relief = "flat")
 
-    b23.place(x=0, y=46, width=181, height=41)
+    b23.place(
+        x = 0, y = 46,
+        width = 120,
+        height = 41)
 
-    # Create a background image for 'advanced'
     img24 = PhotoImage(file="./src/icons/img24.png")
-    b24 = Button(image=img24, borderwidth=0, highlightthickness=0, relief="flat")
+    b24 = Button(
+        image = img24,
+        borderwidth = 0,
+        highlightthickness = 0,
+        relief = "flat")
 
-    b24.place(x=179, y=46, width=181, height=41)
+    b24.place(
+        x = 120, y = 46,
+        width = 120,
+        height = 41)
+
+    img25 = PhotoImage(file="./src/icons/img25.png")
+    b25 = Button(
+        image = img25,
+        borderwidth = 0,
+        highlightthickness = 0,
+        relief = "flat")
+
+    b25.place(
+        x = 240, y = 46,
+        width = 120,
+        height = 41)
+
+    img26 = PhotoImage(file="./src/icons/img26.png")
+    b26 = Button(
+        image = img26,
+        borderwidth = 0,
+        highlightthickness = 0,
+        relief = "flat")
+
+    b26.place(
+        x = 0, y = 5,
+        width = 120,
+        height = 41)
+
+    img27 = PhotoImage(file="./src/icons/img27.png")
+    b27 = Button(
+        image = img27,
+        borderwidth = 0,
+        highlightthickness = 0,
+        relief = "flat")
+
+    b27.place(
+        x = 120, y = 5,
+        width = 120,
+        height = 41)
+
+    img28 = PhotoImage(file="./src/icons/img28.png")
+    b28 = Button(
+        image = img28,
+        borderwidth = 0,
+        highlightthickness = 0,
+        relief = "flat")
+
+    b28.place(
+        x = 240, y = 5,
+        width = 120,
+        height = 41)
 
     window.resizable(False, False)
     window.mainloop()
