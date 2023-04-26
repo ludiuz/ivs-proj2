@@ -9,7 +9,7 @@ VENV_ACTIVATE = $(VENV_DIR)/bin/activate
 
 # Default target
 .PHONY: all
-all: $(VENV_DIR) install test pack #run
+all: $(VENV_DIR) install test pack run
 
 # Create virtual environment
 $(VENV_DIR):
