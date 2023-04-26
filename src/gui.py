@@ -88,7 +88,12 @@ def run_gui():
     # create an interface of GUI
     window.geometry("360x800")
     window.title("Calculator")
+    icon = PhotoImage(file="./src/icons/icon64x64.png")
+    window.iconphoto(True, icon)
+    #window.iconbitmap("./src/icons/icon64x64.ico")
     window.configure(bg="#fcfcfc")
+    window.resizable(False, False)
+    
 
     canvas = Canvas(
         window,
