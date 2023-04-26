@@ -23,7 +23,7 @@ class Calculator:
         self.f = sf.SyntaxFilter()
         self.history = []
 
-    def __call__(self, s: str):
+    def __call__(self, s: str, prof=False):
         """
         Validate and compute the input string, then return the result.
         If an error occurs, return the error type and message.
@@ -33,11 +33,13 @@ class Calculator:
         :return: the result of the computation or an error message
         :rtype: str or tuple
         """
+
         if s == "":
             return s  # empty input
         try:
             # Apply filter to user input to validate its correctness
-            self.f(s)
+            if prof == False:
+                self.f(s)
             # Apply custom eval to compute input
             ret = self.c(str(s))
             self.history.append(ret)
