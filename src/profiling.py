@@ -7,6 +7,7 @@ calc = c.Calculator()
 # Read data from stdin into list
 zoz = sys.stdin.read().strip().split()
 
+
 def calculate():
     """
     This function calculates deviation of the list of numbers
@@ -29,9 +30,10 @@ def calculate():
     res_2 = calc("(1/(" + str(len(zoz)) + "-1))*" + first, True)
 
     # Calculate the standard deviation
-    res = calc("(" + str(res_2) + ")^(1/2)" , True)
+    res = calc("(" + str(res_2) + ")^(1/2)", True)
     return res
 
-#print(calculate())
+
+print(calculate())
 # Run the calculate function using cProfile
-cProfile.run("calculate()")
+# cProfile.run("calculate()")
