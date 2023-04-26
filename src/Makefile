@@ -28,7 +28,7 @@ test: $(VENV_DIR) $(VENV_ACTIVATE)
 # Run Calculator
 .PHONY: run
 run: $(VENV_ACTIVATE)
-	$(PYTHON) ./main.py
+	cd ..; $(PYTHON) ./src/main.py
 
 # Pack files
 .PHONY: pack
