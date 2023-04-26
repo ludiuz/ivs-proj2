@@ -8,7 +8,7 @@
 
 project = "IVS-PROJ2 Calculator"
 copyright = "2023, Tomas, Adam, Mario, Peto"
-author = "Tomas, Adam, Mario, Peto"
+author = "Tomas Novotny, Adam Varsanyi, Mario Perecz, Peter Gvozdjak"
 release = "0.0.1"
 
 # Configuration file for the Sphinx documentation builder.

@@ -64,98 +64,465 @@
            <div itemprop="articleBody">
              
   <h1>Source code for src.gui</h1><div class="highlight"><pre>
-<span></span><span class="c1"># libs</span>
-<span class="kn">import</span> <span class="nn">PySimpleGUI</span> <span class="k">as</span> <span class="nn">sg</span>
-
-<span class="c1"># scripts</span>
-<span class="kn">import</span> <span class="nn">calculator</span> <span class="k">as</span> <span class="nn">calc</span>
+<span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">calculator</span> <span class="kn">import</span> <span class="n">Calculator</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 
-<div class="viewcode-block" id="App"><a class="viewcode-back" href="../../src.html#src.gui.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="n">calc</span><span class="o">.</span><span class="n">Calculator</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">sg</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="s2">&quot;Calculator&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_layout</span><span class="p">())</span>
+<div class="viewcode-block" id="run_gui"><a class="viewcode-back" href="../../src.html#src.gui.run_gui">[docs]</a><span class="k">def</span> <span class="nf">run_gui</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function initialiazes the calculator GUI, by creating new class Formula and setting</span>
+<span class="sd">    up new window with entry field and buttons. This class handles all the button clicks and key</span>
+<span class="sd">    presses by updating the input and result field accordingly.</span>
 
-    <span class="k">def</span> <span class="nf">_create_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span>
-            <span class="p">[</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
-                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                    <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-                    <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span>
-                    <span class="n">text_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                    <span class="n">key</span><span class="o">=</span><span class="s2">&quot;input&quot;</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="p">],</span>
-            <span class="p">[</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span>
-                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
-                    <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-                    <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Helvetica&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
-                    <span class="n">text_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-                    <span class="n">key</span><span class="o">=</span><span class="s2">&quot;imres&quot;</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="p">],</span>
-            <span class="p">[</span><span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span> <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;odm&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">))],</span>
-            <span class="p">[</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;9&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-            <span class="p">],</span>
-            <span class="p">[</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-            <span class="p">],</span>
-            <span class="p">[</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-            <span class="p">],</span>
-            <span class="p">[</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-                <span class="n">sg</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">)),</span>
-            <span class="p">],</span>
-        <span class="p">]</span>
+<span class="sd">    :return: None </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create new class</span>
+    <span class="k">class</span> <span class="nc">Formula</span><span class="p">:</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Initialization of variables self._inp and self.res</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">res</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="App.run"><a class="viewcode-back" href="../../src.html#src.gui.App.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">event</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">event</span> <span class="ow">in</span> <span class="p">(</span><span class="n">sg</span><span class="o">.</span><span class="n">WIN_CLOSED</span><span class="p">,</span> <span class="s2">&quot;Quit&quot;</span><span class="p">):</span>
-                <span class="k">break</span>
-            <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">[</span><span class="s2">&quot;imres&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="s2">&quot;odm&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">+</span> <span class="s2">&quot;)**(1/2)&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">event</span> <span class="o">==</span> <span class="s2">&quot;=&quot;</span><span class="p">:</span>
-                <span class="n">Answer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
-                <span class="n">Answer</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">Answer</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">Update</span><span class="p">(</span><span class="n">Answer</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">Answer</span>
+        <span class="k">def</span> <span class="nf">btn_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Clears entry after holding clear button in GUI</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">btn_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            This method handles button clicks and updates the input field and result field accordingly.</span>
+<span class="sd">    </span>
+<span class="sd">            :param input: str, the value of the button that was clicked</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="nb">input</span> <span class="o">==</span> <span class="s2">&quot;del&quot;</span><span class="p">:</span>
+                <span class="n">pom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">cursor_pos</span> <span class="o">=</span> <span class="n">entry1</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">INSERT</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">cursor_pos</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">pom</span><span class="p">[:</span> <span class="n">cursor_pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">pom</span><span class="p">[</span><span class="n">cursor_pos</span><span class="p">:])</span>
+                <span class="n">entry1</span><span class="o">.</span><span class="n">icursor</span><span class="p">(</span><span class="n">cursor_pos</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">pom</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="k">return</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">input</span> <span class="o">==</span> <span class="s2">&quot;=&quot;</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">entry1</span><span class="o">.</span><span class="n">icursor</span><span class="p">(</span><span class="n">END</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">input</span> <span class="o">==</span> <span class="s2">&quot;odm&quot;</span><span class="p">:</span>
+                <span class="n">pom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="n">pom</span> <span class="o">=</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="n">pom</span> <span class="o">+</span> <span class="s2">&quot;)^(1/)&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">pom</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">+=</span> <span class="n">event</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">[</span><span class="s2">&quot;input&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">ans</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)),</span> <span class="mi">3</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">[</span><span class="s2">&quot;imres&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ans</span><span class="p">))</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">[</span><span class="s2">&quot;imres&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;Can&#39;t calculate...&quot;</span><span class="p">)</span>
+                <span class="n">cursor_pos</span> <span class="o">=</span> <span class="n">entry1</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">INSERT</span><span class="p">)</span>
+                <span class="n">pom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">pom</span><span class="p">[:</span><span class="n">cursor_pos</span><span class="p">]</span> <span class="o">+</span> <span class="nb">input</span> <span class="o">+</span> <span class="n">pom</span><span class="p">[</span><span class="n">cursor_pos</span><span class="p">:])</span>
+                <span class="n">entry1</span><span class="o">.</span><span class="n">icursor</span><span class="p">(</span><span class="n">cursor_pos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
+        <span class="k">def</span> <span class="nf">on_key_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Updates the formula input and result based on the current input</span>
+<span class="sd">            </span>
+<span class="sd">            :param event: The key press event.</span>
+<span class="sd">            :type event: tkinter.Event</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">calc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inp</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">res</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
+    <span class="n">window</span> <span class="o">=</span> <span class="n">Tk</span><span class="p">()</span>
+    <span class="c1"># create an instance of the Formula class</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">Formula</span><span class="p">()</span>
+    <span class="c1"># create an instance of the Calculator class</span>
+    <span class="n">calc</span> <span class="o">=</span> <span class="n">Calculator</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">calc</span><span class="p">(</span><span class="s2">&quot;5+*-&quot;</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
-    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="c1"># create an interface of GUI</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;360x800&quot;</span><span class="p">)</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Calculator&quot;</span><span class="p">)</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="s2">&quot;#fcfcfc&quot;</span><span class="p">)</span>
+
+    <span class="n">canvas</span> <span class="o">=</span> <span class="n">Canvas</span><span class="p">(</span>
+        <span class="n">window</span><span class="p">,</span>
+        <span class="n">bg</span><span class="o">=</span><span class="s2">&quot;#fcfcfc&quot;</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">360</span><span class="p">,</span>
+        <span class="n">bd</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;ridge&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># create a label to display the calculation result</span>
+    <span class="n">label_resoult</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+        <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;e&quot;</span><span class="p">,</span>
+        <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span>
+        <span class="n">bd</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">bg</span><span class="o">=</span><span class="s2">&quot;#fcfcfc&quot;</span><span class="p">,</span>
+        <span class="n">textvariable</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">res</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="c1"># disable label to user input</span>
+    <span class="n">label_resoult</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+    <span class="n">label_resoult</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">190</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">330</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">55</span><span class="p">)</span>
+
+    <span class="c1"># create an image for input</span>
+    <span class="n">entry1_img</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img_textBox1.png&quot;</span><span class="p">)</span>
+    <span class="n">entry1_bg</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_image</span><span class="p">(</span><span class="mf">180.0</span><span class="p">,</span> <span class="mf">137.5</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">entry1_img</span><span class="p">)</span>
+
+    <span class="n">entry1</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span>
+        <span class="n">font</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="mi">22</span><span class="p">),</span>
+        <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
+        <span class="n">bd</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">bg</span><span class="o">=</span><span class="s2">&quot;#fcfcfc&quot;</span><span class="p">,</span>
+        <span class="n">textvariable</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">_inp</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">entry1</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">85</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">330</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">103</span><span class="p">)</span>
+    <span class="c1"># Bind the &quot;Key&quot; event to the &quot;on_key_press&quot; method of the form object using a lambda function</span>
+    <span class="n">entry1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;Key&gt;&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="n">window</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">form</span><span class="o">.</span><span class="n">on_key_press</span><span class="p">,</span> <span class="n">event</span><span class="p">))</span>
+    <span class="c1"># Create a background image for the entry box</span>
+    <span class="n">entry0_img</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img_textBox0.png&quot;</span><span class="p">)</span>
+    <span class="n">entry0_bg</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_image</span><span class="p">(</span><span class="mf">180.0</span><span class="p">,</span> <span class="mf">218.5</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="n">entry0_img</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;=&#39;</span>
+    <span class="n">img0</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img0.png&quot;</span><span class="p">)</span>
+    <span class="n">b0</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img0</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b0</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">270</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">620</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;%&#39;</span>
+    <span class="n">img1</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img1.png&quot;</span><span class="p">)</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img1</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;%&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b1</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">710</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;0&#39;</span>
+    <span class="n">img2</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img2.png&quot;</span><span class="p">)</span>
+    <span class="n">b2</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img2</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b2</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">710</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;.&#39;</span>
+    <span class="n">img3</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img3.png&quot;</span><span class="p">)</span>
+    <span class="n">b3</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img3</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b3</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">710</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;1&#39;</span>
+    <span class="n">img4</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img4.png&quot;</span><span class="p">)</span>
+    <span class="n">b4</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img4</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b4</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">620</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;2&#39;</span>
+    <span class="n">img5</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img5.png&quot;</span><span class="p">)</span>
+    <span class="n">b5</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img5</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b5</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">620</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;3&#39;</span>
+    <span class="n">img6</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img6.png&quot;</span><span class="p">)</span>
+    <span class="n">b6</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img6</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b6</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">620</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;4&#39;</span>
+    <span class="n">img7</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img7.png&quot;</span><span class="p">)</span>
+    <span class="n">b7</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img7</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;4&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b7</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">530</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;5&#39;</span>
+    <span class="n">img8</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img8.png&quot;</span><span class="p">)</span>
+    <span class="n">b8</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img8</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;5&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b8</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">530</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;6&#39;</span>
+    <span class="n">img9</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img9.png&quot;</span><span class="p">)</span>
+    <span class="n">b9</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img9</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;6&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b9</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">530</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;7&#39;</span>
+    <span class="n">img10</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img10.png&quot;</span><span class="p">)</span>
+    <span class="n">b10</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img10</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;7&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b10</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">440</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;8&#39;</span>
+    <span class="n">img11</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img11.png&quot;</span><span class="p">)</span>
+    <span class="n">b11</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img11</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;8&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b11</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">440</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;9&#39;</span>
+    <span class="n">img12</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img12.png&quot;</span><span class="p">)</span>
+    <span class="n">b12</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img12</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;9&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b12</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">440</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;(&#39;</span>
+    <span class="n">img13</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img13.png&quot;</span><span class="p">)</span>
+    <span class="n">b13</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img13</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b13</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;)&#39;</span>
+    <span class="n">img14</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img14.png&quot;</span><span class="p">)</span>
+    <span class="n">b14</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img14</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b14</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;/&#39;</span>
+    <span class="n">img15</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img15.png&quot;</span><span class="p">)</span>
+    <span class="n">b15</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img15</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b15</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;^&#39;</span>
+    <span class="n">img16</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img16.png&quot;</span><span class="p">)</span>
+    <span class="n">b16</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img16</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;^&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b16</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">260</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;sqr&#39;</span>
+    <span class="n">img17</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img17.png&quot;</span><span class="p">)</span>
+    <span class="n">b17</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img17</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;odm&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b17</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">260</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;!&#39;</span>
+    <span class="n">img18</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img18.png&quot;</span><span class="p">)</span>
+    <span class="n">b18</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img18</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;!&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b18</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">260</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;+&#39;</span>
+    <span class="n">img19</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img19.png&quot;</span><span class="p">)</span>
+    <span class="n">b19</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img19</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;+&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b19</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">270</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">530</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;-&#39;</span>
+    <span class="n">img20</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img20.png&quot;</span><span class="p">)</span>
+    <span class="n">b20</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img20</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b20</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">270</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">440</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;X&#39;</span>
+    <span class="n">img21</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img21.png&quot;</span><span class="p">)</span>
+    <span class="n">b21</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img21</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">b21</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">270</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">350</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_button_pressed</span><span class="p">():</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is called when a button is pressed, and checks whether the button is still being pressed after one second.</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">button_pressed</span><span class="p">:</span>
+            <span class="n">form</span><span class="o">.</span><span class="n">btn_clear</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_button_release</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will be called when the button is released.</span>
+
+<span class="sd">        :param event: The event triggered by the button release.</span>
+<span class="sd">        :type event: tkinter.Event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">button_pressed</span>
+        <span class="n">button_pressed</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">on_button_click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function will be called when the button is clicked.</span>
+
+<span class="sd">        :param event: The event that triggered the button click.</span>
+<span class="sd">        :type event: tkinter.Event</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">button_pressed</span>
+        <span class="n">button_pressed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">on_button_pressed</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;clear&#39;</span>
+    <span class="n">img22</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img22.png&quot;</span><span class="p">)</span>
+    <span class="n">b22</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">img22</span><span class="p">,</span>
+        <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">btn_clicked</span><span class="p">(</span><span class="s2">&quot;del&quot;</span><span class="p">),</span>
+        <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">button_pressed</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">b22</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;Button-1&gt;&quot;</span><span class="p">,</span> <span class="n">on_button_click</span><span class="p">)</span>
+    <span class="n">b22</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;ButtonRelease-1&gt;&quot;</span><span class="p">,</span> <span class="n">on_button_release</span><span class="p">)</span>
+
+    <span class="n">b22</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">270</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">260</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;history&#39;</span>
+    <span class="n">img23</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img23.png&quot;</span><span class="p">)</span>
+    <span class="n">b23</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">img23</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">)</span>
+
+    <span class="n">b23</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">46</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">181</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">41</span><span class="p">)</span>
+
+    <span class="c1"># Create a background image for &#39;advanced&#39;</span>
+    <span class="n">img24</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s2">&quot;./src/icons/img24.png&quot;</span><span class="p">)</span>
+    <span class="n">b24</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">img24</span><span class="p">,</span> <span class="n">borderwidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">relief</span><span class="o">=</span><span class="s2">&quot;flat&quot;</span><span class="p">)</span>
+
+    <span class="n">b24</span><span class="o">.</span><span class="n">place</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">179</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">46</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">181</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">41</span><span class="p">)</span>
+
+    <span class="n">window</span><span class="o">.</span><span class="n">resizable</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span></div>
 </pre></div>
 
            </div>
